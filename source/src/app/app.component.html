@@ -1,0 +1,31 @@
+<title>{{version.nameApp}}</title>
+
+<app-header></app-header>
+
+<!--p-toast  [style]="{marginTop: '80px'}"  position="top-right" id="general"></p-toast>
+
+<p-confirmDialog  #cd header="Confirmación" icon="pi pi-exclamation-triangle" baseZIndex="1001">
+  <p-footer>
+    <button type="button" class="ui-button-secondary" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" label="Sí" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog-->
+
+<section class="main">
+  <main class="main-container container-top" role="main">
+    <div class="container">
+      <div class="row">
+        <!--router-outlet></router-outlet--> <!--JASOBRILE-->
+        <app-home></app-home>
+        <!--app-inspecciones-programadas></app-inspecciones-programadas-->
+      </div>
+    </div>
+  </main>
+
+  <div class="clearfix"></div>
+</section>
+
+<app-footer></app-footer>
+
+
+

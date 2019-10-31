@@ -1,0 +1,18 @@
+<!--INI - JASOBRILE-->
+
+<p>Prueba</p>
+
+<div class="container">
+    <div class="panel-ejemplo col-sm-12">
+        <div class="row " *ngFor="let chunk of menu">
+            <a *ngFor="let item of chunk" class="col-md-2  shortcut" routerLink="{{item.route}}"  >
+                <span class="{{ item.color }}">
+                <span class="glyphicon {{ item.icon }}"></span>
+              </span>
+                <h2>{{ item.numero }}</h2>
+                <p>{{ item.titulo }}</p>
+            </a>
+        </div>
+    </div>
+</div>
+<!--FIN - JASOBRILE-->

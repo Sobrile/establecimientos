@@ -1,0 +1,25 @@
+<header id="header">
+  <div  class="border-gradient">
+    <div  class="container">
+      <div  id="logo-sitio"><a [routerLink]="'/home'"  style="text-decoration: none;">
+       <div  class="navbar-brand img-responsive" data-original-title="" id="ba-logo" title=""></div></a>
+      </div>
+      <div  id="nombre-sitio"><h1 title="Version: {{version.version}}">{{version.nameApp}}</h1></div>
+    </div>
+    <div *ngIf="mostrarUsuario" style="height: 100%;display: table-cell;vertical-align: middle;position: relative;float: right;margin-top: -45px;">
+      <button pButton type="button"  icon="pi pi-user" label="{{user.nombre}} {{user.apellido}} {{user.cuil}}" class="ui-button-info"></button>
+      <button pButton type="button" style="margin-right: 5px;margin-left: 5px;" (click)="Logout()" icon="pi pi-power-off" class="ui-button-info"></button>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <div *ngIf="mostrarMenu"  class="made-with-pk">
+    <div class="brand">Men&uacute;</div>
+    <div class="made-with">
+      <button *ngFor="let item of menu" routerLink="{{item.route}}"  type="button" class="btn btn-sm {{item.color }} circulo" title="{{ item.titulo }}"><span class="glyphicon {{item.icon}}"></span></button>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+

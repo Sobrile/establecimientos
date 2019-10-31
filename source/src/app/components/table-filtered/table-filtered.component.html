@@ -1,0 +1,85 @@
+<p-contextMenu #cm [model]="itemsRightMenu"></p-contextMenu>
+  <!--[contextMenu]="itemsRightMenu? cm:''" -->
+<p-menu #menu [popup]="true" [model]="itemsRightMenu"></p-menu>
+<!-- multiple selection actions -->
+<ng-container *ngIf="selectionMultipleMode">
+  <p-menu #menuMultipleSelection [popup]="true" [model]="multipleSelectionMenu"></p-menu>
+  <p-table [columns]="cols" [dataKey]="dataKey" [tableStyle]="{'margin-top': '20px'}">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th [attr.colspan]="!collapseOptions.hidden? columns.length+1:columns.length">
+          ACCIONES DE SELECCIÓN MÚLTIPLE<br>
+          <p class="subheader-th">Seleccione uno a uno los registros de la tabla haciendo clic sobre cada fila, luego elija la acción que desea realizar en el ícono que se encuentra en el extremo derecho de este contenedor.</p>
+        </th>
+        <th style="width: 3em">
+          <a (click)="menuMultipleSelectionToggle($event, menuMultipleSelection)" style="cursor: pointer;" title="Acciones Selección Múltiple">
+            <i [ngClass]="'pi pi-bars'"></i>
+          </a>
+        </th>
+      </tr>
+    </ng-template>
+  </p-table>
+  <br/>
+</ng-container>
+<p-table #dt [columns]="cols" [resizableColumns]="true" [value]="rows" [lazy]="configPagination.allowServerSide"  (onLazyLoad)="loadData($event)" [totalRecords]="configPagination.totalRecords"  [paginator]="true" [rows]="configPagination.rowsPerPage" contextMenuSelectionMode="joint" [loading]="loading" [selectionMode]="selectionMultipleMode? 'multiple':'single'" [(selection)]="selectedRow" (onContextMenuSelect)="rowMenuSelect($event)" (onRowSelect)="rowSelect($event)"  [dataKey]="dataKey" (onRowExpand)="rowExpand($event)" [responsive]="true"  [filterDelay]="500">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngIf="!collapseOptions.hidden" style="width: 3em"></th>
+
+            <th *ngFor="let col of columns" class="ui-sortable-column ng-star-inserted" [pSortableColumn]="col.field" [pSortableColumnDisabled]="col.disableSort" >
+              <div style="display:inline-table" class="ui-g-200" >
+
+                  <div > <label >{{col.header}}</label></div>
+                  <div >      <p-sortIcon  *ngIf="!col.disableSort" [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order" style="padding:0px;margin:0px;"></p-sortIcon></div>
+
+              </div>
+
+            </th>
+            <th *ngIf="allowMenuOnRow" style="width: 3em"></th>
+        </tr>
+        <tr>
+            <th *ngIf="!collapseOptions.hidden" style="width: 3em"></th>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field" >
+                <input *ngIf="col.allowFiltered" class="form-control input-sm" pInputText type="text" placeholder="filtrar" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+            </th>
+            <th *ngIf="allowMenuOnRow"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr #row [pSelectableRow]="rowData"  [pContextMenuRow]="rowData" [class]="appendClassInRow? appendClassInRow(rowData):false">
+            <!-- stop propagation to avoid the exanded row event -->
+            <td [pRowToggler]="rowData" [pRowTogglerDisabled]="togglerIsDisabled(rowData)" *ngIf="!collapseOptions.hidden" (click)="onClickExpandButton($event, row)">
+                <a [title]="expandTitle? expandTitle:''">
+                    <i [ngClass]="iconExpand ? iconExpand : 'pi pi-chevron-right'"></i>
+                </a>
+            </td>
+            <td *ngFor="let col of columns"  class="ui-resizable-column">
+              <!-- render string with html tags -->
+                <span class="ui-column-title">{{col.header}}</span>
+                <div [innerHTML]="printData(rowData,col)"> </div>
+            </td>
+            <td *ngIf="allowMenuOnRow" style="width: 3em">
+              <a (click)="!selectionMultipleMode? menuToggle($event, menu, rowData):''" [class]="selectionMultipleMode? 'disabled':''"  style="cursor: pointer;" title="Acciones">
+                <i [ngClass]="'pi pi-bars'"></i>
+              </a>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+      <tr class="evaluacionRow">
+        <td [attr.colspan]="columns.length + 1 + allowMenuOnRow">
+          <ng-content></ng-content>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData *ngIf="actionButtons && actionButtons.length > 0">
+        <div style="text-align:left">
+          <ng-container *ngFor="let button of actionButtons">
+            <button type="button" [class]="button.class" pButton [icon]="button.icon" (click)="button.execute()" [label]="button.label" [disabled]="button.disabled"></button>
+          </ng-container>
+        </div>
+    </ng-template>
+</p-table>
+<ng-container *ngIf="visibleBackdrop">
+  <div id="backdrop" (click)="collapseEvaluacionActive()"></div>
+</ng-container>

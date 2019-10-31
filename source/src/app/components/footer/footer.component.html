@@ -1,0 +1,33 @@
+<footer>
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-sm-4" style="height: 50px; display: table;">
+          <a class="navbar-brand bac-footer" style="display: table-cell; vertical-align: middle;" href="http://www.buenosaires.gob.ar" target="_blank">Buenos Aires Ciudad</a>
+        </div>
+        <div class="col-md-4 col-sm-4" style="height: 50px; display: table;">
+          <span class="text-muted" style="text-align: center; display: table-cell; vertical-align: middle;">
+           Version: {{version.version}}
+          </span>
+        </div>
+        <div class="col-md-4 col-sm-4" style="height: 50px; display: table;">
+          <div class="sub-brand" style="display: table-cell; vertical-align: middle;">
+            <p>
+              <strong></strong>
+              <br>
+            
+              <br>
+              <span class="text-muted"></span>
+
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf='globals.isContentLoading'>
+    <p-progressBar  [unit]=" " [value]="value" mode="indeterminate" [style]="{'z-index': '10000','left':'20%','height': '10px', 'right': '20%', 'transform': 'none', 'opacity': '1', 'position':'fixed','bottom': '0px'}"> </p-progressBar>
+    </div>
+  </div>
+</footer>

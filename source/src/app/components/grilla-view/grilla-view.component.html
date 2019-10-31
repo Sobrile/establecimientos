@@ -1,0 +1,22 @@
+<div class="col-md-12">
+  <table class="table table-responsive">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th *ngFor="let headRegla of reglasHead" title="{{ headRegla?.descripcion}}" style="background-color: #AED581;">{{ headRegla.sigla}}</th>
+      <th *ngFor="let headAccion of accionesHead"  title="{{ headAccion?.descripcion}}">{{ headAccion.sigla}}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let registro of data;let indexField=index">
+      <td [class]="'empty'" >{{ registro.id }}</td>
+      <td *ngFor="let celda of registro?.dataReglas" [class]="celda?.class">
+      <td *ngFor="let celda of registro?.dataAcciones" [class]="celda?.class">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
