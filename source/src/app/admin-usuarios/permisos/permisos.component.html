@@ -1,6 +1,0 @@
-<p><div class="container">
-  <h2>Permisos</h2>
-  <app-table-filtered [(rows)]="permisos" [(configPagination)]="config" [cols]="cols" [itemsRightMenu]="items" [(loading)]="loading" dataKey="id" [onLazyLoad]="ConsultaServer.bind(this)" [onRowMenuSelect]="onRowMenuSelect.bind(this)" [onRowSelect]="onRowSelect.bind(this)" [actionButtons]="actionButtons" [collapseOptions]="collapseOptions" [(selectedRow)]="selectedRegistro"  [allowMenuOnRow]="true">
-  </app-table-filtered>
-  <app-form-dialog [errorsForm]="errorsForm"  dialogTitle="{{ tituloDialog }}" [(displayDialog)]="displayDialog" [errors]="errors"   [fields]="columnas" [elementToModify]="permiso"    [buttons]="buttons"></app-form-dialog>
-</div>

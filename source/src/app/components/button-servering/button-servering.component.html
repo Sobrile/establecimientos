@@ -1,6 +1,0 @@
-<ng-container *ngIf="confirmAction">
-  <p-button [label]="label" [disabled]="servering || disabled" [icon]="servering? 'pi pi-spin pi-spinner':''" [styleClass]="styleClass" appConfirmAction [actionName]="label" (onParentClick)="clickAction($event)" *ngIf="show"></p-button>
-</ng-container>
-<ng-container *ngIf="!confirmAction">
-  <p-button [label]="label" [disabled]="servering || disabled" [icon]="servering? 'pi pi-spin pi-spinner':''" [styleClass]="styleClass" (click)="clickAction($event)" *ngIf="show"></p-button>
-</ng-container>
