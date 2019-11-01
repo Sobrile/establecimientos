@@ -1,0 +1,46 @@
+<p-dialog [header]="dialogTitle"  [(visible)]="displayDialog"  [draggable]="false" [resizable]="false" [responsive]="false" showEffect="fade" [modal]="true"
+          [style]="{ left: '325px',right: '20%', top: '80px' }" positionTop="10">
+  <div class="ui-g ui-fluid" >
+    <ul *ngIf="errors" >
+      <li  *ngFor="let error of errors">
+        <font color="red">{{ error }}</font>
+      </li>
+    </ul>
+ 
+    <div class="ui-g-12" >
+      <div>
+<!-- 20118369395 -->
+        <div class="ui-g-12">
+          <div  class="ui-g-4"><label>Buscar por Cuil:</label></div>
+          <div class="ui-g-6">
+            <p-inputMask id="cuil" [(ngModel)]="elementToModify.cuil"  mask="99-99999999-9" size="11"></p-inputMask>
+          </div>
+          <div class="ui-g-2">
+            <button   id="disabled-btn" type="button"  (click)="buscar(elementToModify.cuil)" pButton label="Buscar"></button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="{{ campo.classPadre }}"  *ngFor='let campo of fields'>
+        <div *ngIf="key!='cuil' && key!='id' && key!='enabled' ">
+          <div class="{{ campo.class }}">
+            <label >{{ campo.header }}:</label>
+          </div>
+          <div class="{{ campo.class }}">
+            <input class="{{ campo.class }}"  pInputText id="{{ campo.field }}" [(ngModel)]="elementToModify[campo.field]" size="{{ campo.size }}"  [disabled]="true"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <p-message severity="error" text="{{ errorsForm['errorAlta'].message }}" *ngIf="errorsForm['errorAlta']?.valid==false"></p-message>
+      <button *ngFor="let button of buttons" type="button" [class]="button.class" pButton [icon]="button.icon" (click)="button.execute(elementToModify)" [label]="button.label" [disabled]="button.disabled"></button>
+    </div>
+  </p-footer>
+</p-dialog>

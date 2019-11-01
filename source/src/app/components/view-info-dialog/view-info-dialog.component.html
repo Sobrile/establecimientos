@@ -1,0 +1,56 @@
+<p-dialog [header]="dialogTitle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '70%'}" (onHide)="onHide()">
+    <div class="ui-fluid">
+      <ng-container *ngFor="let chunk of chunks">
+        <div class="ui-g">
+          <ng-container *ngFor="let col of chunk">
+            <div style="text-align:right;" class="ui-g-6 ui-md-6 ui-lg-2">
+              <b>{{ col.header }}:</b>
+            </div>
+            <div class="ui-g-6 ui-md-6 ui-lg-2" *ngIf="col.dataType == 'boolean'">
+              {{ lodash.get(elementToShow,col.field)? 'SI':'NO' }}
+            </div>
+            <div class="ui-g-6 ui-md-6 ui-lg-2" *ngIf="col.dataType != 'boolean'">
+              {{ lodash.get(elementToShow,col.field)? lodash.get(elementToShow,col.field):'-' }}
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="ui-fluid">
+      <div class="ui-g">
+        <ng-container *ngFor="let field of fields; let indexField=index">
+          <div class="ui-g-12 ui-md-12 ui-lg-12" [ngStyle]="indexField>0? {'border-top': '1px solid #c8c8c8'}:{}">
+            <h4>{{ field.title }}</h4>
+          </div>
+          <ng-container *ngFor="let col of field.cols; let i=index">
+            <div class="ui-g-6 ui-md-6 ui-lg-{{colWidth[i % 2]}}" style="text-align:right;">
+              <b>{{ col.header }}:</b>
+            </div>
+            <div class="ui-g-6 ui-md-6 ui-lg-{{colWidth[(i+1) % 2]}}" *ngIf="col.dataType == 'boolean'">
+              {{ lodash.get(elementToShow,col.field)? 'SI':'NO' }}
+            </div>
+            <div class="ui-g-6 ui-md-6 ui-lg-{{colWidth[(i+1) % 2]}}" *ngIf="col.dataType != 'boolean'">
+              {{ lodash.get(elementToShow,col.field)? lodash.get(elementToShow,col.field):'-' }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="field.footer">
+            <div class="ui-g-12 ui-md-12 ui-lg-12" [ngClass]="field.footer.parentClass(elementToShow)">
+              <div class="ui-g-6 ui-md-6 ui-lg-6" style="text-align:right;">
+                <b>{{ field.footer.header }}:</b>
+              </div>
+              <div class="ui-g-6 ui-md-6 ui-lg-6">
+                {{ lodash.get(elementToShow,field.footer.field)? lodash.get(elementToShow,field.footer.field):'-' }}
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button *ngFor="let button of buttons" type="button" [class]="button.class" pButton [icon]="button.icon" (click)="button.execute(elementToModify)" [label]="button.label" [disabled]="button.disabled"></button>
+        </div>
+    </p-footer>
+</p-dialog>

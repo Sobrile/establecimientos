@@ -1,0 +1,75 @@
+.circulo {
+  width:25px;
+  height:25px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  margin-right:10px;
+  margin-left: 20px;
+  padding: 0px;
+}
+.made-with-pk {
+  width: 74px;
+  height: 34px;
+  display: block;
+  position:relative;
+  z-index: 555;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+  cursor: pointer;
+  padding: 3px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  -moz-transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  -o-transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  margin-top: 5px;
+}
+.made-with-pk:hover, .made-with-pk:active, .made-with-pk:focus {
+  width: 100%;
+  color: #000000;
+  transition-duration: .55s;
+  padding: 3px 12px;
+}
+
+.made-with-pk:hover .made-with, .made-with-pk:active .made-with,
+.made-with-pk:focus .made-with {
+  opacity: 1;
+}
+.made-with-pk .brand,
+.made-with-pk .made-with {
+  float: left;
+}
+.made-with-pk .brand {
+  position: relative;
+  top: 3px;
+  letter-spacing: 1px;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+}
+
+.made-with-pk .made-with {
+  color: rgba(255, 255, 255);
+  position: absolute;
+  left: 58px;
+  opacity: 0;
+  margin: 0;
+  -webkit-transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  -moz-transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  -o-transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+  transition: 0.55s cubic-bezier(0.6, 0, 0.4, 1);
+}
+.made-with a {
+  color: rgba(255, 255, 255);
+
+}
+.made-with-pk .made-with strong {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+

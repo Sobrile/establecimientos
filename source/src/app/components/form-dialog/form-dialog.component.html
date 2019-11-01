@@ -1,0 +1,166 @@
+<p-dialog [header]="dialogTitle" [(visible)]="displayDialog" [responsive]="true"
+          showEffect="fade" [modal]="true" [positionTop]="0"
+          (onHide)="onHide()"
+          [style]="{ 'z-index': '1001','botton':'0px', 'left':'20%', 'right': '20%', 'transform': 'none', 'opacity': '1'}"
+          class="modal-content">
+  <div>
+    <div class="modal-body" *ngIf="elementToModify">
+      <ul *ngIf="errors">
+        <li *ngFor="let error of errors">
+          <font color="red">{{ error }}</font>
+        </li>
+      </ul>
+      <div class="{{ col.classPadre }}" *ngFor="let col of fields">
+        <div *ngIf="col.field!='id'" [ngSwitch]="col.input">
+          <div *ngSwitchCase="'list'">
+            <p-listbox [options]="cars" [(ngModel)]="selectedCar" [listStyle]="{'max-height':'250px'}">
+              <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix">
+                  <img src="assets/showcase/images/demo/car/{{car.label}}.png"
+                       style="display:inline-block;margin:5px 0 0 5px" width="48">
+                  <span style="float:right;margin:20px 10px 0 0">{{car.value}}</span>
+                </div>
+              </ng-template>
+              <p-footer>
+                Selected: {{selectedCar || 'none'}}
+              </p-footer>
+            </p-listbox>
+          </div>
+          <div *ngSwitchCase="'input'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+              <input class="{{ col.class }}" pInputText [id]="col.field" class="ng-dirty ng-invalid"
+                     [(ngModel)]="elementToModify[col.field]" [disabled]="col.disabled"
+                     [placeholder]="col.placeHolder? col.placeHolder:''"/>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+            </div>
+          </div>
+          <div *ngSwitchCase="'number'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+              <input class="{{ col.class }}" type="number" [id]="col.field"
+                     class="ng-dirty ng-invalid" [(ngModel)]="elementToModify[col.field]"
+                     [disabled]="col.disabled" [placeholder]="col.placeHolder? col.placeHolder:''"/>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+            </div>
+          </div>
+          <!--year               -->
+          <div *ngSwitchCase="'year'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+              <p-dropdown class="{{ col.class }}" [disabled]="col.disabled" [(id)]="col.field"
+                          [options]="col.data"
+                          [(ngModel)]="elementToModify[col.field]"></p-dropdown>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+              <br>
+            </div>
+          </div>
+          <!--     date                -->
+          <div *ngSwitchCase="'calendar'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+
+              <p-calendar class="{{ col.class }}" inputStyleClass="form-control" size="4" type="text"
+                          [(id)]="col.field" [(ngModel)]="elementToModify[col.field]" required
+                          [disabled]="col.disabled"
+                          [minDate]="diaMin()"
+                          name="col.field"
+                          [maxDate]="diaMax()"
+                          dateFormat="dd/mm/yy"
+                          [locale]="es"></p-calendar>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+
+            </div>
+          </div>
+          <div *ngSwitchCase="'select'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+
+            <div class="{{ col.class }}">
+
+              <p-dropdown [filter]="col.virtualScroll? true:false" class="{{ col.class }}"
+                          [disabled]="col.disabled" [(id)]="col.field" [options]="col.data"
+                          [(ngModel)]="elementToModify[col.field]"
+                          [virtualScroll]="col.virtualScroll? true:false" itemSize="20"
+                          [filterBy]="col.virtualScroll? 'label,value.name':''"></p-dropdown>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+
+            </div>
+          </div>
+          <div *ngSwitchCase="'textarea'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+                                <textarea [disabled]="col.disabled" class="{{ col.class }} form-control input-lg"
+                                          rows="3" [id]="col.field" [(ngModel)]="elementToModify[col.field]"
+                                          [placeholder]="col.placeHolder? col.placeHolder:''"></textarea>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+            </div>
+          </div>
+          <div *ngSwitchCase="'checkbox'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+              <p-inputSwitch class="{{ col.class }}" [(ngModel)]="elementToModify[col.field]"
+                             [id]="col.field" [disabled]="col.disabled" class="form-control input-lg"
+                             [(ngModel)]="checked"></p-inputSwitch>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+            </div>
+
+          </div>
+          <div *ngSwitchCase="'radio'">
+            <div class="{{ col.class }}">
+              <label for="{{ col.field }}">{{col.header}}</label>
+            </div>
+            <div class="{{ col.class }}">
+              <div class="ui-g">
+                <ng-container *ngFor="let radio of col.data; let i=index">
+                  <div class="ui-xs-12 ui-md-12 ui-lg-4">
+                    <p-radioButton inputId="radio-{{col.field}}-{{i}}" class="{{ col.class }}"
+                                   [disabled]="col.disabled" [(id)]="col.field"
+                                   [label]="radio.label" [value]="radio.value"
+                                   [(ngModel)]="elementToModify[col.field]"></p-radioButton>
+                  </div>
+                </ng-container>
+              </div>
+              <p-message severity="error" text="{{ errorsForm[col.field].message }}"
+                         *ngIf="errorsForm[col.field]?.valid==false"></p-message>
+            </div>
+          </div>
+        </div> <!----fin switch -->
+      </div>
+
+
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <ng-container *ngFor="let button of buttons">
+        <button *ngIf="!button.confirmAction" type="button" [class]="button.class" pButton [icon]="button.icon"
+                (click)="button.execute(elementToModify)" [label]="button.label"
+                [disabled]="button.disabled"></button>
+        <button *ngIf="button.confirmAction" type="button" [class]="button.class" pButton [icon]="button.icon"
+                [label]="button.label" [disabled]="button.disabled" appConfirmAction [actionName]="button.label"
+                (onParentClick)="button.execute(elementToModify)"></button>
+      </ng-container>
+    </div>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,5 @@
+<div class="container">
+  <h2>Menus</h2>
+  <app-table-filtered  (expandedRowChange)="onRowExpand($event)" [(rows)]="menus" [(configPagination)]="config" [cols]="cols"   [itemsRightMenu]="items" [(loading)]="loading" dataKey="id"  [onLazyLoad]="ConsultaServer.bind(this)"  [onRowSelect]="onRowSelect.bind(this)" [(selectedRow)]="selectedRegistro" [actionButtons]="actionButtons" [collapseOptions]="collapseOptions" [allowMenuOnRow]="true" [selectionMultipleMode]="enabledMultipleSelection" [multipleSelectionMenu]="multipleSelectionMenu" [unselectAllRows]="unselectAllRows"></app-table-filtered>
+  <app-form-dialog [errorsForm]="errorsForm" [selectedItems]="selectedItems" dialogTitle="{{ tituloDialog }}" [(displayDialog)]="displayDialog" [errors]="errors"   [fields]="columnas" [elementToModify]="menu"    [buttons]="buttons"></app-form-dialog>
+</div>

@@ -1,0 +1,47 @@
+/* highlight evaluacion */
+#backdrop {
+  position:fixed;
+  padding:0px;
+  left:0px;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  background: rgba(0, 0, 0, 0.5);
+  background-repeat:repeat;
+  width:100%;
+  z-index:2;
+}
+
+tr.evaluacionRow > td  {
+  position:relative;
+  z-index:11;
+}
+
+th .column-header {
+  padding: 0px;
+  margin: 0px;
+
+
+
+
+
+}
+
+/*th .column-header span {*/
+  /*position: relative;*/
+  /*top: 50%;*/
+/*}*/
+
+.subheader-th {
+  font-weight: normal;
+}
+
+:host >>> .ui-table .ui-table-tbody>tr>td {
+
+}
+
+.ng-tns-c8-2 {
+ width:  600px;
+
+
+}

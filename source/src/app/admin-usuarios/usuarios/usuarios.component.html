@@ -1,0 +1,73 @@
+<div class="container">
+    <h2>Usuarios</h2>
+    <p-dialog [header]="tituloDialog" [(visible)]="displayDialogAlta" (onHide)="onHide()" [draggable]="false"
+              [resizable]="false" [responsive]="false" showEffect="fade" [modal]="true"
+              [style]="{ left: '325px',right: '20%', top: '80px' }" positionTop="10">
+        <div class="ui-g ui-fluid">
+            <ul *ngIf="errors">
+                <li *ngFor="let error of errors">
+                    <font color="red">{{ error }}</font>
+                </li>
+            </ul>
+            <div class="ui-g-12">
+                <div>
+                    <div class="ui-g-12">
+                        <div class="ui-g-4"><label>Buscar por Cuil:</label></div>
+                        <div class="ui-g-6">
+                            <p-inputMask id="cuil" [(ngModel)]="Usuario.cuil" mask="99-99999999-9"
+                                         size="11"></p-inputMask>
+                        </div>
+                        <div class="ui-g-2">
+                            <button id="disabled-btn" type="button" (click)="buscarCuil()" pButton
+                                    label="Buscar"></button>
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngIf="displayData">
+                    <div class="{{ campo.classPadre }}" *ngFor='let campo of camposUsuario'>
+                        <div *ngIf="key!='cuil' && key!='id' && key!='enabled' ">
+                            <div class="{{ campo.class }}">
+                                <label>{{ campo.header }}:</label>
+                            </div>
+                            <div class="{{ campo.class }}">
+                                <input class="{{ campo.class }}" pInputText id="{{ campo.field }}"
+                                       [(ngModel)]="Usuario[campo.field]" size="{{ campo.size }}" [disabled]="true"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button *ngFor="let button of buttons" type="button" [class]="button.class" pButton [icon]="button.icon"
+                        (click)="altaUsuarioAd()" [label]="button.label" [disabled]="button.disabled"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+    <app-table-filtered (expandedRowChange)="onRowExpand($event)" [(rows)]="usuarios" [(configPagination)]="config"
+                        [cols]="cols" [itemsRightMenu]="items" dataKey="id" [onLazyLoad]="ConsultaServer.bind(this)"
+                        [onRowMenuSelect]="onRowMenuSelect.bind(this)" [onRowSelect]="onRowSelect.bind(this)"
+                        [(selectedRow)]="selectedRegistro" [actionButtons]="actionButtons"
+                        [collapseOptions]="collapseOptions" [allowMenuOnRow]="true">
+        <ng-container>
+            <p-pickList [showSourceControls]="false" (onMoveToSource)="delRol($event)" (onMoveToTarget)="addRol($event)"
+                        [showTargetControls]="false" [source]="roles" [target]="rolesAsignados"
+                        [sourceHeader]="'No Asignados'" [targetHeader]="'Asignados'">
+                <ng-template let-rol pTemplate="item">
+                    <div class="ui-helper-clearfix">
+
+                        <div style="">{{rol.nombre}}</div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </ng-container>
+
+    </app-table-filtered>
+    <app-form-dialog [errorsForm]="errorsForm" positionTop="10" dialogTitle="{{ tituloDialog }}"
+                     [(displayDialog)]="displayDialog" [errors]="errors" [fields]="columnas" [elementToModify]="usuario"
+                     [buttons]="buttons"></app-form-dialog>
+</div>
