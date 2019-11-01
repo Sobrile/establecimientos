@@ -1,9 +1,11 @@
 <p-contextMenu #cm [model]="itemsRightMenu"></p-contextMenu>
   <!--[contextMenu]="itemsRightMenu? cm:''" -->
 <p-menu #menu [popup]="true" [model]="itemsRightMenu"></p-menu>
+
 <!-- multiple selection actions -->
-<ng-container *ngIf="selectionMultipleMode">
+<!--ng-container *ngIf="selectionMultipleMode">
   <p-menu #menuMultipleSelection [popup]="true" [model]="multipleSelectionMenu"></p-menu>
+
   <p-table [columns]="cols" [dataKey]="dataKey" [tableStyle]="{'margin-top': '20px'}">
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -20,7 +22,9 @@
     </ng-template>
   </p-table>
   <br/>
-</ng-container>
+</ng-containe-->
+
+
 <p-table #dt [columns]="cols" [resizableColumns]="true" [value]="rows" [lazy]="configPagination.allowServerSide"  (onLazyLoad)="loadData($event)" [totalRecords]="configPagination.totalRecords"  [paginator]="true" [rows]="configPagination.rowsPerPage" contextMenuSelectionMode="joint" [loading]="loading" [selectionMode]="selectionMultipleMode? 'multiple':'single'" [(selection)]="selectedRow" (onContextMenuSelect)="rowMenuSelect($event)" (onRowSelect)="rowSelect($event)"  [dataKey]="dataKey" (onRowExpand)="rowExpand($event)" [responsive]="true"  [filterDelay]="500">
     <ng-template pTemplate="header" let-columns>
         <tr>
@@ -45,6 +49,7 @@
             <th *ngIf="allowMenuOnRow"></th>
         </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr #row [pSelectableRow]="rowData"  [pContextMenuRow]="rowData" [class]="appendClassInRow? appendClassInRow(rowData):false">
             <!-- stop propagation to avoid the exanded row event -->
@@ -53,18 +58,21 @@
                     <i [ngClass]="iconExpand ? iconExpand : 'pi pi-chevron-right'"></i>
                 </a>
             </td>
+
             <td *ngFor="let col of columns"  class="ui-resizable-column">
               <!-- render string with html tags -->
                 <span class="ui-column-title">{{col.header}}</span>
                 <div [innerHTML]="printData(rowData,col)"> </div>
             </td>
+
             <td *ngIf="allowMenuOnRow" style="width: 3em">
-              <a (click)="!selectionMultipleMode? menuToggle($event, menu, rowData):''" [class]="selectionMultipleMode? 'disabled':''"  style="cursor: pointer;" title="Acciones">
+              <!--a (click)="!selectionMultipleMode? menuToggle($event, menu, rowData):''" [class]="selectionMultipleMode? 'disabled':''"  style="cursor: pointer;" title="Acciones">
                 <i [ngClass]="'pi pi-bars'"></i>
-              </a>
+              </a-->
             </td>
         </tr>
     </ng-template>
+
     <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
       <tr class="evaluacionRow">
         <td [attr.colspan]="columns.length + 1 + allowMenuOnRow">

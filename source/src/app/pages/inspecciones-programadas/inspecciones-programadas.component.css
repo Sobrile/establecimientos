@@ -1,0 +1,22 @@
+hr{ border-top: none !important;
+    margin-top: 0px !important;
+    margin-bottom: 15px !important;
+    box-shadow: 0px 0px 4px rgba(242, 219, 81, 0.34);
+    height: 4px;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(to right, rgba(248,208,27,1) 0%, rgba(235,237,165,1) 42%, rgba(235,237,165,1) 51%, rgba(44,183,233,1) 100%);
+}
+
+.center{
+  margin: 0 auto;
+  float: none;
+}
+
+.marginBottom{
+  margin: 0px 0px 5px 0px
+}
+
+.marginBottomTop{
+  margin: 5px 0px 5px 0px
+}

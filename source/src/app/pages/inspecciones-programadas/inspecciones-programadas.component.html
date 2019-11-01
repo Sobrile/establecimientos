@@ -1,18 +1,131 @@
 <!--INI - JASOBRILE-->
+<div class="container">
+  <h1>Búsqueda de Inspecciones Programadas</h1>
+  <hr />
+  <p class="text-justify">
+    Si querés conocer si existen inspecciones programadas para tu comercio, industria u obra en construcción, introducí
+    la calle y altura de tu actividad comercial en el buscador. En la consulta, podrás verificar si existen o no
+    inspecciones programadas.
+  </p>
+  <p class="text-justify">
+    Considerá que hay inspecciones que no son programadas y se realizan sin previo aviso, ya que están originadas en
+    denuncias o requieren un control sorpresa. Estas inspecciones no están incluidas en la consulta.
+  </p>
+  <p class="text-justify">
+    Si tu comercio u obra en construcción tiene más de un acceso o salidas por más de una calle, te recomendamos
+    consultar por cada una de ellos.
+  </p>
+  <p class="text-justify">
+    Tené en cuenta que la fecha que se visualiza es la del día a partir del cual podés recibir una inspección. La
+    programación de inspecciones puede sufrir cambios de acuerdo a variaciones en la planificación.
+  </p>
+  <p class="text-justify">
+    <b>
+      La información contenida en esta página web no tiene carácter vinculante, sólo se encuentra disponible para fines
+      informativos y puede ser modificada en cualquier momento y sin previo aviso.
+    </b>
+  </p>
 
-<p>Prueba</p>
+  <form action="" id="form-busqueda-inspecciones" method="get" novalidate="novalidate">
+    <br />
+    <div class="well col col-md-8 center">
+      <div class="row">
+        <div class="col col-md-12">
+          <div class="col col-md-6 marginBottom">
+            <label>Calle</label>
+            <input class="form-control" data-val="true" data-val-required="La Calle es obligatoria." id="Calle"
+              name="Calle" placeholder="Ingrese la Calle" type="text" value="" min="0" onkeypress="">
+            <!--style="text-transform: uppercase;"-->
+          </div>
+          <div class="col col-md-6 marginBottom">
+            <label>Altura</label>
+            <input class="form-control" data-val="true" data-val-number="El campo Altura debe ser numérico."
+              data-val-required="La Altura es obligatoria." id="Altura" name="Altura" placeholder="Altura" type="number"
+              value="" min="0" onkeypress="">
+            <!--return isNumber(event)-->
+          </div>
+        </div>
+
+        <!--INI - CAPCHA-->
+        <div class="col col-md-12">
+          <div id="recaptcha" class="" style="margin: 15px;">
+            <div class="g-recaptcha" data-callback="recaptchaCallback"
+              data-sitekey="6LfC3G4UAAAAACYVb08YJchQ4l6hzViXt5BrIFaP" style="width: 303px; margin: 0 auto;">
+              <div style="width: 304px; height: 78px;">
+                <div>
+                  <iframe
+                    src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LfC3G4UAAAAACYVb08YJchQ4l6hzViXt5BrIFaP&amp;co=aHR0cDovL2luc3BlY2Npb25lc2JhLmJ1ZW5vc2FpcmVzLmdvYi5hcjo4MA..&amp;hl=en&amp;v=66WEle60vY1w2WveBS-1ZMFs&amp;size=normal&amp;cb=v0t6sxawp29m"
+                    width="304" height="78" role="presentation" name="a-qn96imvasj14" frameborder="0" scrolling="no"
+                    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox">
+                  </iframe>
+                </div>
+
+                <textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response"
+                  style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;">
+                </textarea>
+              </div>
+            </div>
+
+            <p class="text-align-center" style="max-width:304px!important; margin: 0 auto;">
+              <span class="field-validation-valid" data-valmsg-for="ErrorCaptcha" data-valmsg-replace="true"></span>
+            </p>
+          </div>
+        </div>
+        <!--FIN - CAPCHA-->
+
+        <div class="col col-md-6 center">
+          <div class="col col-md-6 marginBottomTop">
+            <button type="button" onclick="" class="btn btn-lg btn-default bg-white col-xs-12 col-md-12 col-sm-12"
+              id="submit-btn-limpiar">
+              Limpiar
+            </button>
+          </div>
+          <div class="col col-md-6 marginBottomTop">
+            <button type="button" onclick="" class="btn btn-primary btn-lg col-xs-12 col-md-12 col-sm-12"
+              id="submit-btn-buscar">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<br />
+<br />
 
 <div class="container">
-    <div class="panel-ejemplo col-sm-12">
-        <div class="row " *ngFor="let chunk of menu">
-            <a *ngFor="let item of chunk" class="col-md-2  shortcut" routerLink="{{item.route}}"  >
-                <span class="{{ item.color }}">
-                <span class="glyphicon {{ item.icon }}"></span>
-              </span>
-                <h2>{{ item.numero }}</h2>
-                <p>{{ item.titulo }}</p>
-            </a>
-        </div>
-    </div>
+  <app-table-filtered
+    dataKey="id"
+    (expandedRowChange)="onRowExpand.bind($event)"
+    [(rows)]="menus"
+    [(configPagination)]="config"
+    [cols]="cols"
+    [itemsRightMenu]="items"
+    [(loading)]="loading"
+    [onLazyLoad]="ConsultaServer(this)"
+    [onRowSelect]="onRowSelect(this)"
+    [(selectedRow)]="selectedRegistro"
+
+    [collapseOptions]="collapseOptions"
+    [allowMenuOnRow]="true"
+    [selectionMultipleMode]="enabledMultipleSelection"
+    [multipleSelectionMenu]="multipleSelectionMenu"
+    [unselectAllRows]="unselectAllRows">
+  </app-table-filtered>
+  <!--[actionButtons]="actionButtons"-->
+
+
+  <app-form-dialog
+    [errorsForm]="errorsForm"
+    [selectedItems]="selectedItems"
+    dialogTitle="{{ tituloDialog }}"
+    [(displayDialog)]="displayDialog"
+    [errors]="errors"
+    [fields]="columnas"
+    [elementToModify]="menu"
+    [buttons]="buttons">
+  </app-form-dialog>
 </div>
 <!--FIN - JASOBRILE-->
