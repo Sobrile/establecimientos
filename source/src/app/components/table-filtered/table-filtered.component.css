@@ -45,3 +45,10 @@ th .column-header {
 
 
 }
+
+.ui-table table {
+  border-collapse: collapse;
+  width: 20%;
+  table-layout: fixed;
+}
+    /*width: 100%; -- JASOBRILE*/

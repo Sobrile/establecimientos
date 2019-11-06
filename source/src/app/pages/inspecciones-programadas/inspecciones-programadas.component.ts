@@ -106,7 +106,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
         classPadre: 'ui-g-12',
         input: 'input',
         placeHolder: 'id',
-        allowFiltered: true,
+        allowFiltered: false,
         required: false,
         // pattern: '^[a-zA-Z0-9 áéíóúÑñ]{5,20}$',
         type: 'number',
@@ -139,12 +139,12 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
         disabled: false
       },
       {
-        header: 'Fecha Inspec.',
-        field: 'fecInspeccion',
+        header: 'Fecha Plan.',
+        field: 'fecPlanificada',
         class: 'ui-g-12',
         classPadre: 'ui-g-12',
         input: 'input',
-        placeHolder: 'Fecha de Inspección',
+        placeHolder: 'Fecha Planificada',
         allowFiltered: true,
         required: true,
         // pattern: '^[a-zA-Z0-9 áéíóúÑñ]{5,20}$',
@@ -218,25 +218,12 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
         disabled: false
       },
       {
-        header: 'Resultado',
-        field: 'resultado',
+        header: 'Requisitos',
+        field: 'requisitos',
         class: 'ui-g-12',
         classPadre: 'ui-g-12',
         input: 'input',
-        placeHolder: 'Resultado',
-        allowFiltered: true,
-        required: true,
-        //  pattern: '^[a-zA-Z0-9 áéíóúÑñ]{5,20}$',
-        type: 'string',
-        disabled: false
-      },
-      {
-        header: 'Actas Infrac.',
-        field: 'actas',
-        class: 'ui-g-12',
-        classPadre: 'ui-g-12',
-        input: 'input',
-        placeHolder: 'Actas de Infracción',
+        placeHolder: 'Requisitos',
         allowFiltered: true,
         required: true,
         //  pattern: '^[a-zA-Z0-9 áéíóúÑñ]{5,20}$',
@@ -281,29 +268,25 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
         parent_id: null,
         dependencia: 'Prueba 1',
         area: 'Prueba 2',
-        fecInspeccion: 'Prueba 3',
+        fecPlanificada: 'Prueba 3',
         motivo: 'Prueba 4',
         calleAltura: 'Prueba 5',
         pisoDptoLocal: 'Prueba 6',
         cuit: 'Prueba 7',
         rSocial: 'Prueba 8',
-        resultado: 'Prueba 9',
-        actas: 'Prueba 10',
         links: []
       },
       {
-        id: 2,
+        id: 11,
         parent_id: null,
         dependencia: 'Prueba 11',
         area: 'Prueba 22',
-        fecInspeccion: 'Prueba 33',
+        fecPlanificada: 'Prueba 33',
         motivo: 'Prueba 44',
         calleAltura: 'Prueba 55',
         pisoDptoLocal: 'Prueba 66',
         cuit: 'Prueba 77',
         rSocial: 'Prueba 88',
-        resultado: 'Prueba 99',
-        actas: 'Prueba 100',
         links: []
       }
     ];
@@ -565,4 +548,11 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
     if (id && id !== '0') {
     }
   }
+
+  mostrarGrilla(event: Event) {
+    const divBuscar = document.getElementById('dataTableContainer');
+
+    divBuscar.style.display = 'block';
+  }
+
 }

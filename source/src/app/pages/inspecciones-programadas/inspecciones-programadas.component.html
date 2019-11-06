@@ -81,7 +81,7 @@
             </button>
           </div>
           <div class="col col-md-6 marginBottomTop">
-            <button type="button" onclick="" class="btn btn-primary btn-lg col-xs-12 col-md-12 col-sm-12"
+            <button type="button" (click)="mostrarGrilla($event)" class="btn btn-primary btn-lg col-xs-12 col-md-12 col-sm-12"
               id="submit-btn-buscar">
               Buscar
             </button>
@@ -95,37 +95,22 @@
 <br />
 <br />
 
-<div class="container">
-  <app-table-filtered
-    dataKey="id"
-    (expandedRowChange)="onRowExpand.bind($event)"
-    [(rows)]="menus"
-    [(configPagination)]="config"
-    [cols]="cols"
-    [itemsRightMenu]="items"
-    [(loading)]="loading"
-    [onLazyLoad]="ConsultaServer(this)"
-    [onRowSelect]="onRowSelect(this)"
-    [(selectedRow)]="selectedRegistro"
+<div id="dataTableContainer" style="display:none">
+  <section id="widget-grid" class="">
+    <div class="row">
+      <app-table-filtered dataKey="id" (expandedRowChange)="onRowExpand.bind($event)" [(rows)]="menus"
+        [(configPagination)]="config" [cols]="cols" [itemsRightMenu]="items" [(loading)]="loading"
+        [onLazyLoad]="ConsultaServer(this)" [onRowSelect]="onRowSelect(this)" [(selectedRow)]="selectedRegistro"
+        [collapseOptions]="collapseOptions" [allowMenuOnRow]="true" [selectionMultipleMode]="enabledMultipleSelection"
+        [multipleSelectionMenu]="multipleSelectionMenu" [unselectAllRows]="unselectAllRows">
+      </app-table-filtered>
+      <!--[actionButtons]="actionButtons"-->
 
-    [collapseOptions]="collapseOptions"
-    [allowMenuOnRow]="true"
-    [selectionMultipleMode]="enabledMultipleSelection"
-    [multipleSelectionMenu]="multipleSelectionMenu"
-    [unselectAllRows]="unselectAllRows">
-  </app-table-filtered>
-  <!--[actionButtons]="actionButtons"-->
-
-
-  <app-form-dialog
-    [errorsForm]="errorsForm"
-    [selectedItems]="selectedItems"
-    dialogTitle="{{ tituloDialog }}"
-    [(displayDialog)]="displayDialog"
-    [errors]="errors"
-    [fields]="columnas"
-    [elementToModify]="menu"
-    [buttons]="buttons">
-  </app-form-dialog>
+      <app-form-dialog [errorsForm]="errorsForm" [selectedItems]="selectedItems" dialogTitle="{{ tituloDialog }}"
+        [(displayDialog)]="displayDialog" [errors]="errors" [fields]="columnas" [elementToModify]="menu"
+        [buttons]="buttons">
+      </app-form-dialog>
+    </div>
+  </section>
 </div>
 <!--FIN - JASOBRILE-->

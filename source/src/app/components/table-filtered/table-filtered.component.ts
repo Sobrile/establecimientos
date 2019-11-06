@@ -10,10 +10,7 @@ import {ConfigPagination} from '../../../models/config-pagination';
 
 @Pipe({
   name: 'customDateFormat',
-})
-
-
-@Component({
+})@Component({
   selector: 'app-table-filtered',
   templateUrl: './table-filtered.component.html',
   animations: [
@@ -65,6 +62,7 @@ export class TableFilteredComponent implements OnInit {
   // enable or disabled row style
   // this function return a class string depending data row value
   @Input() appendClassInRow: Function;
+
   // if true, it enables the multiple selection mode
   @Input() selectionMultipleMode: boolean = false;
   @Input() multipleSelectionMenu: MenuItem[];
@@ -110,7 +108,7 @@ export class TableFilteredComponent implements OnInit {
     var dataSub = dat[col.campoData];
     if (data != null || dataSub != null) {
       switch (col.type) {
-        case "date":
+        case 'date':
           var datePipe = new DatePipe("en-US");
           return datePipe.transform(data, 'dd/MM/yyyy');
           break;
