@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/switchMap';
 import * as _ from 'lodash';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { FormButton } from '../../../models/form-button';
+// import { FormButton } from '../../../models/form-button';
 import { CollapseOptions } from '../../../models/collapse-options';
 import { MenuItem } from '../../../models/menu-item';
 import { TableFiltered } from '../../../models/table-filtered';
@@ -11,6 +11,7 @@ import { BasePageComponent } from '../../components/base-page/base-page.componen
 import { ConfigPagination } from '../../../models/config-pagination';
 import { ValidadorService } from '../../../services/validador.service';
 import { SessionService } from '../../../services/session.service';
+import { FormButton } from 'src/models/form-button';
 
 @Component({
   selector: 'app-inspecciones-programadas',
@@ -19,50 +20,51 @@ import { SessionService } from '../../../services/session.service';
   providers: [ValidadorService, SessionService]
 })
 export class InspeccionesProgramadasComponent extends BasePageComponent implements OnInit {
-  buttons: FormButton[];
-  actionButtons: FormButton[];
-  public registro: any;
+  public collapseOptions: CollapseOptions;
+  public config: ConfigPagination;
   public menus: any;
-  public Menu: any;
-  public msgs: string;
+  public params: any;
+  public errorsForm: any;
+  public comportamiento: any[];
+  public id: string;
+  public errors: any;
+  public comportamientoForm: any;
+  public registro: any;
+  loading: boolean;
+  disabledFields: any[];
   cols: TableFiltered[];
   columnas: any[];
-  brands: any[];
-  colors: any[];
-  yearFilter: number;
-  public comportamiento: any[];
-  yearTimeout: any;
-  onRowExpand: any;
-  selectedItems: any;
-  result: any;
-  page: any;
-  loading: boolean;
-  displayDialog: boolean;
-  tituloDialog: string;
+  newMenu: boolean;
   menu: any = {};
   selectedRegistro: any;
-  newMenu: boolean;
-  calificaciones: any[];
-  objetivos: any[];
-  disabledFields: any[];
+  tituloDialog: string;
+  displayDialog: boolean;
+  multipleSelectionMenu: MenuItem[];
+  onRowExpand: any;
+  unselectAllRows = false;
+  selectedItems: any;
+  items: MenuItem[];
+
+  public RegistrosPorPagina = 5;
+  public Menu: any;
+  public msgs: string;
   public selectedEstado: any;
-  public id: string;
   public errorMessage: any;
   public error: any;
   public confirmado;
   public camposBusqueda: any;
   public totalRecords: number;
-  public errors: any;
-  public errorsForm: any;
-  public collapseOptions: CollapseOptions;
-  public RegistrosPorPagina = 10;
-  items: MenuItem[];
-  public params: any;
-  public config: ConfigPagination;
-  public comportamientoForm: any;
+  brands: any[];
+  colors: any[];
+  yearFilter: number;
+  yearTimeout: any;
+  result: any;
+  page: any;
+  calificaciones: any[];
+  objetivos: any[];
+  actionButtons: FormButton[];
+  buttons: FormButton[];
   enabledMultipleSelection = false;
-  multipleSelectionMenu: MenuItem[];
-  unselectAllRows = false;
 
   constructor(
     private validadorService: ValidadorService,
@@ -75,6 +77,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
   ngOnInit() {
     this.loading = true;
     this.setForm();
+
     this.collapseOptions = {
       hidden: true,
       disabled: false
@@ -85,7 +88,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
       { label: 'Borrar Menu', icon: 'pi pi-times', command: (event) => this.borrarMenu() }
     ];*/
 
-    //   setTimeout(() => {
+    // setTimeout(() => {
     this.disabledFields = ['estado_menu_evaluacion', 'comentarios', 'objectivo', 'definicion_objetivo'];
 
     const configCalendar = {};
@@ -93,7 +96,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
     /***********configuro la tabla******************/
     this.config = {
       /*****registro por pagina *************/
-      rowsPerPage: 10,
+      rowsPerPage: 5,
       allowGlobalSearch: false,
       allowServerSide: false
     };
@@ -189,8 +192,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
         //  pattern: '^[a-zA-Z0-9 áéíóúÑñ]{5,20}$',
         type: 'string',
         disabled: false
-      }
-      ,
+      },
       {
         header: 'CUIT',
         field: 'cuit',
@@ -266,27 +268,79 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
       {
         id: 1,
         parent_id: null,
-        dependencia: 'Prueba 1',
-        area: 'Prueba 2',
-        fecPlanificada: 'Prueba 3',
-        motivo: 'Prueba 4',
-        calleAltura: 'Prueba 5',
-        pisoDptoLocal: 'Prueba 6',
-        cuit: 'Prueba 7',
-        rSocial: 'Prueba 8',
+        dependencia: 'DGFyC',
+        area: 'SGO Inspecciones simples',
+        fecPlanificada: '29/11/2019',
+        motivo: 'Analizar Documentación',
+        calleAltura: 'CORRIENTES AV. 3201',
+        pisoDptoLocal: 'Local 4',
+        cuit: '30-71038609-7',
+        rSocial: 'Prueba 1',
         links: []
       },
       {
-        id: 11,
+        id: 2,
         parent_id: null,
-        dependencia: 'Prueba 11',
-        area: 'Prueba 22',
-        fecPlanificada: 'Prueba 33',
-        motivo: 'Prueba 44',
-        calleAltura: 'Prueba 55',
-        pisoDptoLocal: 'Prueba 66',
-        cuit: 'Prueba 77',
-        rSocial: 'Prueba 88',
+        dependencia: 'DGFyC',
+        area: 'Auditorias Integrales Programadas',
+        fecPlanificada: '07/12/2019',
+        motivo: 'Inspección AIP',
+        calleAltura: 'CORRIENTES AV. 3201',
+        pisoDptoLocal: 'Piso 2 - Dpto D',
+        cuit: '28-23772215-9',
+        rSocial: 'Prueba 2',
+        links: []
+      },
+      {
+        id: 3,
+        parent_id: null,
+        dependencia: 'DGFyC',
+        area: 'Auditorias Integrales Programadas',
+        fecPlanificada: '07/12/2019',
+        motivo: 'Inspección AIP',
+        calleAltura: 'CORRIENTES AV. 3201',
+        pisoDptoLocal: 'Piso 7 - Dpto B',
+        cuit: '28-23572215-9',
+        rSocial: 'Prueba 3',
+        links: []
+      },
+      {
+        id: 4,
+        parent_id: null,
+        dependencia: 'DGFyC',
+        area: 'Auditorias Integrales Programadas',
+        fecPlanificada: '08/12/2019',
+        motivo: 'Inspección AIP',
+        calleAltura: 'CORRIENTES AV. 3201',
+        pisoDptoLocal: 'Piso 5 - Dpto B',
+        cuit: '28-23773215-9',
+        rSocial: 'Prueba 4',
+        links: []
+      },
+      {
+        id: 5,
+        parent_id: null,
+        dependencia: 'DGFyC',
+        area: 'Auditorias Integrales Programadas',
+        fecPlanificada: '09/12/2019',
+        motivo: 'Inspección AIP',
+        calleAltura: 'CORRIENTES AV. 3201',
+        pisoDptoLocal: 'Piso 4 - Dpto B',
+        cuit: '28-23772515-9',
+        rSocial: 'Prueba 5',
+        links: []
+      },
+      {
+        id: 6,
+        parent_id: null,
+        dependencia: 'DGFyC',
+        area: 'Auditorias Integrales Programadas',
+        fecPlanificada: '10/12/2019',
+        motivo: 'Inspección AIP',
+        calleAltura: 'CORRIENTES AV. 3201',
+        pisoDptoLocal: 'Piso 2 - Dpto A',
+        cuit: '28-23722215-9',
+        rSocial: 'Prueba 6',
         links: []
       }
     ];
@@ -357,7 +411,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
     });
   }
 
-  getDataFromCol(index, cols) {
+  /*getDataFromCol(index, cols) {
     let camp = {};
 
     const campo = {};
@@ -382,7 +436,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
     });
 
     return descripcion;
-  }
+  }*/
 
   showDialogToAdd() {
     this.errors = [];
@@ -420,8 +474,8 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
     });
   }
 
-  altaMenu(Menu) {
-  }
+  /*altaMenu(Menu) {
+  }*/
 
   refresh() {
     this.Consulta();
@@ -433,9 +487,10 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
   editarRegistro() {
     this.errors = [];
 
-    /******habilito todos los campos para la modificacion ******/
+    // habilito todos los campos para la modificacion
     this.newMenu = false;
-    /*******bajos los estados disponibles para un id de menu*******/
+
+    //bajos los estados disponibles para un id de menu
     this.menu = this.cloneEvaluacion(this.selectedRegistro);
     this.comportamiento = [];
     this.tituloDialog = 'Editar Menu';
@@ -482,7 +537,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
     };
   }
 
-  save(menu) {
+  /*save(menu) {
     if (this.validadorService.validarCampos(menu, this.columnas) === true) {
       if (this.newMenu === false) {
         this.guardaMenu(menu);
@@ -493,7 +548,7 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
       this.errorsForm = this.validadorService.getErrorForm();
       this.showError('Error en la carga de datos ', '');
     }
-  }
+  }*/
 
   // add textarea for next objectives
   addObjective(event, data = '') {
@@ -554,5 +609,4 @@ export class InspeccionesProgramadasComponent extends BasePageComponent implemen
 
     divBuscar.style.display = 'block';
   }
-
 }

@@ -43,101 +43,102 @@
   [responsive]="true"
   [filterDelay]="500">
 
-    <ng-template pTemplate="header" let-columns>
-        <tr>
-          <!--th *ngIf="!collapseOptions.hidden" style="width: 3em"></th-->
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <!--th *ngIf="!collapseOptions.hidden" style="width: 3em"></th-->
 
-          <ng-container *ngFor="let col of columns">
-            <th *ngIf="col.field !== 'requisitos'"
-              class="ui-sortable-column ng-star-inserted"
-              [pSortableColumn]="col.field"
-              [pSortableColumnDisabled]="col.disableSort">
+      <ng-container *ngFor="let col of columns">
+        <th *ngIf="col.field !== 'requisitos'"
+          class="ui-sortable-column ng-star-inserted"
+          [pSortableColumn]="col.field"
+          [pSortableColumnDisabled]="col.disableSort">
 
-              <div style="display:inline-table" class="ui-g-200">
-                <div >
-                  <label >{{col.header}}</label>
-                </div>
+          <div style="display:inline-table" class="ui-g-200">
+            <div >
+              <label >{{col.header}}</label>
+            </div>
 
-                <!--Botones Ordenamiento-->
-                <div>
-                  <p-sortIcon
-                    *ngIf="!col.disableSort"
-                    [field]="col.field"
-                    ariaLabel="Activate to sort"
-                    ariaLabelDesc="Activate to sort in descending order"
-                    ariaLabelAsc="Activate to sort in ascending order"
-                    style="padding:0px;margin:0px;">
-                  </p-sortIcon>
-                </div>
-              </div>
-            </th>
-            <!--th *ngIf="allowMenuOnRow" style="width: 3em"></th-->
-          </ng-container>
-        </tr>
-        <tr>
-          <!--th *ngIf="!collapseOptions.hidden" style="width: 3em"></th-->
+            <!--Botones Ordenamiento-->
+            <div>
+              <p-sortIcon
+                *ngIf="!col.disableSort"
+                [field]="col.field"
+                ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order"
+                ariaLabelAsc="Activate to sort in ascending order"
+                style="padding:0px;margin:0px;">
+              </p-sortIcon>
+            </div>
+          </div>
+        </th>
+        <!--th *ngIf="allowMenuOnRow" style="width: 3em"></th-->
+      </ng-container>
+    </tr>
+    <tr>
+      <!--th *ngIf="!collapseOptions.hidden" style="width: 3em"></th-->
 
-          <!--Botones de Filtro-->
-          <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
-            <th *ngIf="col.field !== 'requisitos'">
-              <input *ngIf="col.allowFiltered"
-                    class="form-control input-sm"
-                    pInputText type="text"
-                    placeholder="filtrar"
-                    (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-            </th>
-            <!--th *ngIf="allowMenuOnRow"></th-->
-          </ng-container>
-        </tr>
-    </ng-template>
+      <!--Botones de Filtro-->
+      <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+        <th *ngIf="col.field !== 'requisitos'">
+          <input *ngIf="col.allowFiltered"
+                class="form-control input-sm"
+                pInputText type="text"
+                placeholder="filtrar"
+                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+        </th>
+        <!--th *ngIf="allowMenuOnRow"></th-->
+      </ng-container>
+    </tr>
+  </ng-template>
 
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr #row [pSelectableRow]="rowData"  [pContextMenuRow]="rowData" [class]="appendClassInRow? appendClassInRow(rowData):false">
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <!--tr #row [pSelectableRow]="rowData"  [pContextMenuRow]="rowData" [class]="appendClassInRow? appendClassInRow(rowData):false"-->
+    <tr #row [pSelectableRow]="rowData"  [pContextMenuRow]="rowData">
 
-          <!-- stop propagation to avoid the exanded row event -->
-            <!--td [pRowToggler]="rowData" [pRowTogglerDisabled]="togglerIsDisabled(rowData)" *ngIf="!collapseOptions.hidden" (click)="onClickExpandButton($event, row)">
-              <a [title]="expandTitle? expandTitle:''">
-                  <i [ngClass]="iconExpand ? iconExpand : 'pi pi-chevron-right'"></i>
-              </a>
-            </td-->
+      <!-- stop propagation to avoid the exanded row event -->
+        <!--td [pRowToggler]="rowData" [pRowTogglerDisabled]="togglerIsDisabled(rowData)" *ngIf="!collapseOptions.hidden" (click)="onClickExpandButton($event, row)">
+          <a [title]="expandTitle? expandTitle:''">
+              <i [ngClass]="iconExpand ? iconExpand : 'pi pi-chevron-right'"></i>
+          </a>
+        </td-->
 
-            <!-- Datos -->
-            <td *ngFor="let col of columns"  class="ui-resizable-column">
-              <span class="ui-column-title">{{col.header}}</span>
+        <!-- Datos -->
+        <td *ngFor="let col of columns"  class="ui-resizable-column">
+          <span class="ui-column-title">{{col.header}}</span>
 
-              <!-- INI - JASOBRILE-->
-              <!--div [innerHTML]="printData(rowData,col)"> </div-->
-              <div [innerHTML]="printData(rowData,col)" *ngIf="col.field !== 'requisitos'"> </div>
+          <!-- INI - JASOBRILE-->
+          <!--div [innerHTML]="printData(rowData,col)"> </div-->
+          <div [innerHTML]="printData(rowData,col)" *ngIf="col.field !== 'requisitos'"> </div>
 
-              <div *ngIf="col.field === 'requisitos'">
-                <button type="button" onclick="" class="btn btn-primary" id="submit-btn-requisitos"> Requis. </button>
-              </div>
-            </td>
-            <!-- FIN - JASOBRILE-->
-
-            <!--td *ngIf="allowMenuOnRow" style="width: 3em">
-              <a (click)="!selectionMultipleMode? menuToggle($event, menu, rowData):''" [class]="selectionMultipleMode? 'disabled':''"  style="cursor: pointer;" title="Acciones">
-                <i [ngClass]="'pi pi-bars'"></i>
-              </a>
-            </td-->
-        </tr>
-    </ng-template>
-
-    <!--ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-      <tr class="evaluacionRow">
-        <td [attr.colspan]="columns.length + 1 + allowMenuOnRow">
-          <ng-content></ng-content>
+          <div *ngIf="col.field === 'requisitos'">
+            <button type="button" onclick="" class="btn btn-primary" id="submit-btn-requisitos"> Requis. </button>
+          </div>
         </td>
-      </tr>
-    </ng-template-->
+        <!-- FIN - JASOBRILE-->
 
-    <!--ng-template pTemplate="summary" let-rowData *ngIf="actionButtons && actionButtons.length > 0">
-        <div style="text-align:left">
-          <ng-container *ngFor="let button of actionButtons">
-            <button type="button" [class]="button.class" pButton [icon]="button.icon" (click)="button.execute()" [label]="button.label" [disabled]="button.disabled"></button>
-          </ng-container>
-        </div>
-    </ng-template-->
+        <!--td *ngIf="allowMenuOnRow" style="width: 3em">
+          <a (click)="!selectionMultipleMode? menuToggle($event, menu, rowData):''" [class]="selectionMultipleMode? 'disabled':''"  style="cursor: pointer;" title="Acciones">
+            <i [ngClass]="'pi pi-bars'"></i>
+          </a>
+        </td-->
+    </tr>
+  </ng-template>
+
+  <!--ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+    <tr class="evaluacionRow">
+      <td [attr.colspan]="columns.length + 1 + allowMenuOnRow">
+        <ng-content></ng-content>
+      </td>
+    </tr>
+  </ng-template-->
+
+  <!--ng-template pTemplate="summary" let-rowData *ngIf="actionButtons && actionButtons.length > 0">
+      <div style="text-align:left">
+        <ng-container *ngFor="let button of actionButtons">
+          <button type="button" [class]="button.class" pButton [icon]="button.icon" (click)="button.execute()" [label]="button.label" [disabled]="button.disabled"></button>
+        </ng-container>
+      </div>
+  </ng-template-->
 </p-table>
 
 <ng-container *ngIf="visibleBackdrop">

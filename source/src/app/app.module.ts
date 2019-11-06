@@ -142,10 +142,9 @@ import { InspeccionesProgramadasComponent } from './pages/inspecciones-programad
     NgxPermissionsModule.forRoot(),
     CaptchaModule, // Keep in mind the "forRoot"-magic nuances!
     ReactiveFormsModule,
-    AutoCompleteModule/*,
-
+    AutoCompleteModule
     // INI - JASOBRILE
-    RouterModule.forRoot([
+    /*RouterModule.forRoot([
       { path: 'inspeccionesProgramadas' , component: InspeccionesProgramadasComponent }
     ])*/
     // FIN - JASOBRILE
