@@ -33,7 +33,7 @@
     "highcharts": "^7.0.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng-swagger-gen": "^1.7.0",
     "ng2-input-autocomplete": "^1.0.0",
     "ng2-toastr": "^4.1.2",
